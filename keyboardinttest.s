@@ -78,12 +78,15 @@ SetINT:
     move.b	#TIMERB_LO,CIATBLO(a2)
     move.b	#TIMERB_HI,CIATBHI(a2)
     move.b	#$18,CIACRB(a2)		;one-shot mode and load
-	move.l	#0,a0               ;clear a0 just for testing reasons
+	move.l	#0,a0               ;for debugging
+    move.l  vbrBase,a0          ;for debugging
+    move.l  IRQ2(a0),a0         ;for debugging    
+    lea     KeyboardInterrupt,a0;for debugging
+	move.l	#0,a0               ;for debugging
     move.l	vbrBase(a6),a0
     move.l  #KeyboardInterrupt,IRQ2(a0)
 
-    move.w	#INTF_SETCLR|INTF_INTEN|INTF_PORTS,INTENA(a5)
-    move.b	#$88,CIAICR(a2)		;enable CIAA SP interrupt
+    move.w	#INTF_SETCLR|INTF_INTEN|INTF_PORTS,INTENA(a5)    move.b	#$88,CIAICR(a2)		;enable CIAA SP interrupt
 
 
 SetupKeyboard:
